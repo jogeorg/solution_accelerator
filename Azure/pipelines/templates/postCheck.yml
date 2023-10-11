@@ -1,0 +1,6 @@
+steps:
+  - task: Bash@3
+    inputs:
+      targetType: "inline"
+      script: "echo 'No post yet'"
+    displayName: PostCheck

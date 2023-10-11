@@ -1,0 +1,38 @@
+schedules:
+  - cron: "0 12 * * 1-5"
+    displayName: "8am Mon - Fri"
+    branches:
+      include:
+        - main
+    always: true
+
+pool:
+  name: Azure Pipelines
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: Deploy
+    jobs:
+      - job: Deploy
+        steps:
+          - checkout: self
+            fetchDepth: 1
+          - template: templates/sp.yml
+          - task: Bash@3
+            name: PreCheck
+            inputs:
+              filePath: "Azure/scripts/preCheck.sh"
+          - template: templates/execute-tf.yml
+            parameters:
+              action: "plan"
+              team: $(team)
+              env: $(env)
+          - template: templates/execute-tf.yml
+            parameters:
+              action: "apply"
+              team: $(team)
+              env: $(env)
+          - task: Bash@3
+            name: PostCheck
+            inputs:
+              filePath: "Azure/scripts/postCheck.sh"

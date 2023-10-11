@@ -1,0 +1,12 @@
+steps:
+  - task: AzureCLI@2
+    displayName: Get Service Principal
+    inputs:
+      azureSubscription: $(subscriptionId) #'Cory Helmrich - US Government'
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        echo "##vso[task.setvariable variable=SERVICE_PRINCIPAL_ID;]$servicePrincipalId"
+        echo "##vso[task.setvariable variable=SERVICE_PRINCIPAL_KEY;]$servicePrincipalKey"
+        echo "##vso[task.setvariable variable=TENANT_ID;]$tenantId"
+      addSpnToEnvironment: true

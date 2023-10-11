@@ -1,0 +1,15 @@
+parameters:
+  - name: action
+    type: string
+  - name: team
+    type: string
+  - name: env
+    type: string
+    default: ""
+
+steps:
+  - bash: |
+      echo "Executing action Terraform" ${{ parameters.action }} ${{ parameters.team }} ${{ parameters.env }}
+      cd  ./Azure/scripts
+      . ./terraform.sh ${{ parameters.action }} ${{ parameters.team }} ${{ parameters.env }}
+    displayName: Execute Terraform ${{ parameters.action }} ${{ parameters.team }} ${{ parameters.env }}
