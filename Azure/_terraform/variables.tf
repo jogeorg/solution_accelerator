@@ -1,19 +1,14 @@
 ///////////////////////////////////////Tenant Variables/////////////////////////////////////////
 variable "subscription" {
   type        = string
-  default     = "207b6b40-3eae-4d22-a548-6414110dd021"
-  description = "The subscription ID"
 }
 
 variable "tenant" {
   type        = string
-  default     = "8a09f2d7-8415-4296-92b2-80bb4666c5fc"
-  description = "The tenant ID"
 }
 
 variable "client_id" {
   type        = string
-  default     = "ec4f5c99-be19-4b19-9bbb-aebe9a6adcab"
 }
 
 variable "client_secret" {

@@ -33,10 +33,10 @@ MY_ACTION="$1"
 #To be dynamically updated in the future
 export be_rg_name="CORE_RG"
 export be_st_name="coregenstorageact"
-export subscription="207b6b40-3eae-4d22-a548-6414110dd021"
+export subscription=""
 export be_key="${TEAM}${env}.tfstate"
-export client_id="ec4f5c99-be19-4b19-9bbb-aebe9a6adcab"
-export tenant_id="8a09f2d7-8415-4296-92b2-80bb4666c5fc"
+export client_id=""
+export tenant_id=""
 export TF_VAR_client_secret="$SERVICE_PRINCIPAL_KEY"
 #end
 

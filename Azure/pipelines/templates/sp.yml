@@ -2,7 +2,7 @@ steps:
   - task: AzureCLI@2
     displayName: Get Service Principal
     inputs:
-      azureSubscription: $(subscriptionId) #'Cory Helmrich - US Government'
+      azureSubscription: $(subscriptionId)
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
