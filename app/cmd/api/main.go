@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/go-chi/chi"
 )
@@ -33,41 +34,6 @@ func (c *Config) routes() http.Handler {
     r.Post("/receive-json", c.receiveJSON)
     return r
 }
-
-// func (c *Config) receiveJSON(w http.ResponseWriter, r *http.Request) {
-//     var data []VirtualMachine
-//     err := json.NewDecoder(r.Body).Decode(&data)
-//     if err != nil {
-//         http.Error(w, err.Error(), http.StatusBadRequest)
-//         return
-//     }
-
-// 	// return some terraform code
-//     fmt.Printf("Received JSON: %+v\n", data)
-// 	code := DCVM(data)
-// 	fmt.Printf("Your Code: %+v\n", code)
-
-
-
-// 	// write code to a file
-// 	fileName := "go.tfvars"
-// 	err <= ioutil.WriteFile(fileName, code, 0644)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	fmt.Printf("%s created.", fileName)
-
-
-// 	//read new file contents
-// 	fileData, err := ioutil.Reafile(fileName)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	fmt.Printf("File Content:\n %s", fileData)
-
-//     w.WriteHeader(http.StatusOK)
-// }
-
 
 func main() {
 	app := Config{}
@@ -117,9 +83,22 @@ func (c *Config) receiveJSON(w http.ResponseWriter, r *http.Request) {
         c.errorJSON(w, err)
         return
     }
+	// This will need to be updated vvv
+	dc_code := DCVM(data)
+	vm_code := VM(data)
 
-	code := DCVM(data)
-	err = writer(code, "go.tfvars")
+	req := []string{dc_code, vm_code}
+
+	var builder strings.Builder
+	//builder.Grow(100) preallocate memory of known size
+	for _, s := range req {
+		_, err := builder.WriteString(s)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	err = writer(builder.String(), "go.tfvars")
 	if err != nil {
 		fmt.Println("Error writing to file:", err)
 	} else {
